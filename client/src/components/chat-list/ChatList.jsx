@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import "./chatList.css";
 import { useQuery } from "@tanstack/react-query";
 
-const ChatList = () => {
+const ChatList = ({userId}) => {
   const { isPending, error, data } = useQuery({
     queryKey: ["userChats"],
     queryFn: () =>
-      fetch(`${import.meta.env.VITE_API_URL}/api/userchats`, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/userchats/${userId}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

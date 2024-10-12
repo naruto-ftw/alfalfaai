@@ -92,8 +92,8 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
   }
 });
 
-app.get("/api/userchats", ClerkExpressRequireAuth(), async (req, res) => {
-  const userId = req.auth.userId;
+app.get("/api/userchats/:userId", async (req, res) => {
+  const userId = req.params.userId;
   console.log(req);
 
   try {
