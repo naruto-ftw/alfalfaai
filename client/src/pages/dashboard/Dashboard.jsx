@@ -1,15 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "./dashboard.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 const Dashboard = () => {
+  const userId = useOutletContext();
+
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: (text) => {
-      return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
+      return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${userId}`, {
         method: "POST",
         credentials: "include",
         headers: {

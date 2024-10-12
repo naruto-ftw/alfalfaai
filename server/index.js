@@ -41,8 +41,8 @@ app.get("/api/upload", (req, res) => {
   res.send(result);
 });
 
-app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
-  const userId = req.auth.userId;
+app.post("/api/chats/:userId", async (req, res) => {
+  const userId = req.params.userId;
   const { text } = req.body;
 
   try {
@@ -112,11 +112,10 @@ app.get("/api/userchats/:userId", async (req, res) => {
   }
 });
 
-app.get("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
-  const userId = req.auth.userId;
+app.get("/api/chats/:id", async (req, res) => {
 
   try {
-    const chat = await Chat.findOne({ _id: req.params.id, userId });
+    const chat = await Chat.findOne({ _id: req.params.id });
 
     res.status(200).send(chat);
   } catch (err) {
@@ -125,8 +124,7 @@ app.get("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
   }
 });
 
-app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
-  const userId = req.auth.userId;
+app.put("/api/chats/:id", async (req, res) => {
 
   const { question, answer, img } = req.body;
 
@@ -139,7 +137,7 @@ app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
 
   try {
     const updatedChat = await Chat.updateOne(
-      { _id: req.params.id, userId },
+      { _id: req.params.id },
       {
         $push: {
           history: {
